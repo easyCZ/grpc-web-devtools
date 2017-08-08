@@ -1,0 +1,13 @@
+{
+  "name": "gRPC 2",
+  "version": "1.3.1",
+  "description": "grpc-web debugger",
+  "devtools_page": "devtools.html",
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;",
+  "permissions": [
+    "file:///*",
+    "http://*/*",
+    "https://*/*"
+  ]
+}
