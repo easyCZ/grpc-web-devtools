@@ -1,7 +1,7 @@
 # grpchrome
 gRPC Debugger for Chrome
 
-Very very much work in progress.
+**Very very much work in progress.**
 
 ## Usage
 1. Clone
