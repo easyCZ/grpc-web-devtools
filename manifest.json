@@ -15,6 +15,6 @@
   ],
   "web_accessible_resources" : [
     "build/inject.js",
-    "build/public.js"
+    "build/pageScript.js"
   ]
 }
