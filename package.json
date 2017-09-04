@@ -2,6 +2,7 @@
   "name": "grpc-web-devtools",
   "version": "0.0.1",
   "description": "Debugger for grpc-web",
+  "repository": "git@github.com:easyCZ/grpc-web-devtools.git",
   "main": "src/index.js",
   "scripts": {
     "static": "mkdir -p ./build && cp src/devtools.html src/panel.html ./build/",
@@ -10,19 +11,18 @@
     "watch2": "npm run static && tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "easyCZ",
   "license": "ISC",
   "dependencies": {
     "@types/chrome": "0.0.48",
     "@types/google-protobuf": "^3.2.7",
     "google-protobuf": "^3.4.0",
-    "grpc-web-client": "^0.3.0",
-    "tsc": "^1.20150623.0",
-    "typescript": "^2.5.2"
+    "grpc-web-client": "^0.3.0"
   },
   "devDependencies": {
     "html-webpack-plugin": "^2.30.1",
     "ts-loader": "^2.3.4",
-    "webpack": "^3.5.5"
+    "webpack": "^3.5.5",
+    "typescript": "^2.5.2"
   }
 }
