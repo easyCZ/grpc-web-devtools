@@ -2,19 +2,19 @@
   "name": "Chrome Query",
   "version": "1.1",
   "description": "Extends the Developer Tools, adding a sidebar that displays the jQuery data associated with the selected DOM element.",
-  "devtools_page": "./build/devtools.html",
+  "devtools_page": "devtools.html",
   "manifest_version": 2,
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "exclude_globs": [ "https://www.google*" ],
-      "js": ["build/inject.js"],
+      "js": ["inject.js"],
       "run_at": "document_start",
       "all_frames": true
     }
   ],
   "web_accessible_resources" : [
-    "build/inject.js",
-    "build/pageScript.js"
+    "inject.js",
+    "pageScript.js"
   ]
 }

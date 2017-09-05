@@ -1,5 +1,5 @@
 
-const PAGE_SCRIPT_URL = chrome.extension.getURL('build/pageScript.js');
+const PAGE_SCRIPT_URL = chrome.extension.getURL('pageScript.js');
 
 export function inject(url: string): void {
     const script = document.createElement('script');

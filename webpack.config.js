@@ -1,5 +1,6 @@
 const path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -19,7 +20,11 @@ module.exports = {
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-            { test: /\.tsx?$/, loader: 'ts-loader' }
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: [/node_modules/]
+            }
         ]
     },
     plugins: [
@@ -33,5 +38,11 @@ module.exports = {
             template: 'src/panel.html',
             chunks: ['panel']
         }),
+        new CopyWebpackPlugin([
+            {
+                from: 'src/manifest.json',
+                to: 'manifest.json',
+            }
+        ])
     ]
 }

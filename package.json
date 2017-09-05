@@ -20,9 +20,10 @@
     "grpc-web-client": "^0.3.0"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^2.30.1",
     "ts-loader": "^2.3.4",
-    "webpack": "^3.5.5",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "webpack": "^3.5.5"
   }
 }
