@@ -7,7 +7,7 @@ module.exports = {
         devtools: "./src/devtools.ts",
         inject: "./src/inject.ts",
         pageScript: './src/pageScript.ts',
-        panel: './src/panel.ts',
+        panel: './src/panel.tsx',
     },
     output: {
         path: path.join(__dirname, "build"),

@@ -8,28 +8,33 @@ import {GrpcDebugger, MethodDefinition, RequestDebugger, Code, BrowserHeaders} f
 class GrpcWebExtensionRequestDebugger implements RequestDebugger {
 
     onHeaders(headers: BrowserHeaders): void {
-        throw new Error("Method not implemented.");
+        window.postMessage(headers, '*');
+        // throw new Error("Method not implemented.");
     }
 
     onTrailers(metadata: BrowserHeaders): void {
-        throw new Error("Method not implemented.");
+        window.postMessage(metadata, '*');
     }
 
     onChunk(metadata: BrowserHeaders): void {
-        throw new Error("Method not implemented.");
+        window.postMessage(metadata, '*');
+        // throw new Error("Method not implemented.");
     }
 
     onMessage(payload: Message): void {
-        throw new Error("Method not implemented.");
+        window.postMessage(payload, '*');
+        // throw new Error("Method not implemented.");
     }
 
 
     onEnd(grpcStatus: Code | null): void {
-        throw new Error("Method not implemented.");
+        window.postMessage(grpcStatus, '*');
+        // throw new Error("Method not implemented.");
     }
 
     onError(code: Code, err: Error): void {
-        throw new Error("Method not implemented.");
+        window.postMessage({ code, err }, '*');
+        // throw new Error("Method not implemented.");
     }
 
 }

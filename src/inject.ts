@@ -13,3 +13,7 @@ export function inject(url: string): void {
 }
 
 inject(PAGE_SCRIPT_URL);
+
+window.addEventListener('message', (event) => {
+    console.log('message', event);
+}, false);
