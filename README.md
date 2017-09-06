@@ -1,4 +1,4 @@
-# grpchrome
+# GRPC Web Devtools
 gRPC Debugger for Chrome as an extension
 
 **Very very much work in progress.**
