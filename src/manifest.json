@@ -1,7 +1,7 @@
 {
-  "name": "Chrome Query",
+  "name": "gRPC Web Devtools",
   "version": "1.1",
-  "description": "Extends the Developer Tools, adding a sidebar that displays the jQuery data associated with the selected DOM element.",
+  "description": "Extend developer tools with a grpc-web debugger",
   "devtools_page": "devtools.html",
   "manifest_version": 2,
   "content_scripts": [
