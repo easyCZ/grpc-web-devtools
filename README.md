@@ -1,14 +1,15 @@
-# grpchrome
-gRPC Debugger for Chrome
+# GRPC Web Devtools
+gRPC Debugger for Chrome as an extension
 
 **Very very much work in progress.**
 
-## Usage
-1. Clone
-2. Load as unpacked extension into chrome at chrome://extensions
-3. On a page, open dev tools and switch to gRPC tab
-4. Load in the protobuf definitions the site uses
-5. Refresh the page with the extension open (alternatively open dev tools for the extension (inspector in detached moted)) - most work is in the console 
+## Dev
+1. `npm i && npm run compile` or `npm run watch`
+2. Load unpacked chrome extension from `grpc-web-devtools/build`
+3. Checkout https://github.com/easyCZ/grpc-web/tree/debugger and switch to the `debugger` branch
+4. In `grpc-web/ts` run `npm run build:lib && npm link` to create a symlink to the grpc web with the new debugger interface
+5. Run the example in `grpc-web/example` with `npm run start`
+6. Visit the example page and open devtools
 
 
 ## Structure
@@ -24,3 +25,5 @@ Injects `pageScript.ts` into currently rendered page to attach `window.__GRPC_WE
 
 ### Page script
 Implements MPI to talk to the panel
+
+
