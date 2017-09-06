@@ -1,5 +1,7 @@
-# GRPC Web Devtools
-gRPC Debugger for Chrome as an extension
+# gRPC Web Devtools
+This an extension to support debugging of [grpc-web](https://github.com/improbable-eng/grpc-web) from the browser. It is using an exposed debugger interface which is currently in [development](https://github.com/easyCZ/grpc-web/tree/debugger).
+
+The vision is to be able to debug gRPC web as easily as it is to use the Network tab in Chrome. To do this, we'd like to hear your use cases for the debugger. Please raise an issue :)
 
 **Very very much work in progress.**
 
