@@ -24,7 +24,7 @@ Responsible for initialization of a gRPC developer tools panel `devtools.js & de
 Actual panel implementation inside the chrome developer tools
 
 ### Inject
-Injects `pageScript.ts` into currently rendered page to attach `window.__GRPC_WEB_DEVTOOLS__` to the window and make it accessible to the client application
+Injects `injected.ts` into currently rendered page to attach `window.__GRPC_WEB_DEVTOOLS__` to the window and make it accessible to the client application
 
 ### Page script
 Implements MPI to talk to the panel

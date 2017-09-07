@@ -5,9 +5,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         devtools: "./src/devtools.ts",
-        inject: "./src/inject.ts",
-        pageScript: './src/pageScript.ts',
+        contentScript: "./src/contentScript.ts",
+        injected: './src/injected.ts',
         panel: './src/panel.tsx',
+        background: './src/background.ts',
     },
     output: {
         path: path.join(__dirname, "build"),

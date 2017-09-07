@@ -5,11 +5,8 @@
   "repository": "git@github.com:easyCZ/grpc-web-devtools.git",
   "main": "src/index.js",
   "scripts": {
-    "static": "mkdir -p ./build && cp src/devtools.html src/panel.html ./build/",
-    "compile": "webpack && npm run static",
-    "watch": "webpack --watch",
-    "watch2": "npm run static && tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack && npm run static",
+    "start": "webpack --watch"
   },
   "author": "easyCZ",
   "license": "ISC",

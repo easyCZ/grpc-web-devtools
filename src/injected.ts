@@ -2,7 +2,7 @@
  * Gets injected onto a website to expose a debugger on the window object
  */
 import {Message} from "google-protobuf";
-import {GrpcDebugger, MethodDefinition, RequestDebugger, Code, BrowserHeaders} from "grpc-web-client";
+import {Debugger, MethodDefinition, RequestDebugger, Code, BrowserHeaders} from "grpc-web-client";
 
 
 class GrpcWebExtensionRequestDebugger implements RequestDebugger {
@@ -39,7 +39,7 @@ class GrpcWebExtensionRequestDebugger implements RequestDebugger {
 
 }
 
-class GrpcWebExtensionDebugger implements GrpcDebugger {
+class GrpcWebExtensionDebugger implements Debugger {
 
     request(id: number, host: string, method: MethodDefinition, metadata: BrowserHeaders, message: Message): RequestDebugger {
         return new GrpcWebExtensionRequestDebugger();

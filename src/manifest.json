@@ -8,13 +8,17 @@
     {
       "matches": ["<all_urls>"],
       "exclude_globs": [ "https://www.google*" ],
-      "js": ["inject.js"],
+      "js": ["contentScript.js"],
       "run_at": "document_start",
       "all_frames": true
     }
   ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "web_accessible_resources" : [
-    "inject.js",
-    "pageScript.js"
+    "contentScript.js",
+    "injected.js"
   ]
 }
