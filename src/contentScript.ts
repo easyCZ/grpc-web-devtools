@@ -1,4 +1,6 @@
 
+import {WindowMessage} from "./mpi";
+
 const PAGE_SCRIPT_URL = chrome.extension.getURL('injected.js');
 
 export function inject(url: string): void {
@@ -14,16 +16,10 @@ export function inject(url: string): void {
 
 inject(PAGE_SCRIPT_URL);
 
+// Relay messages from the injected scrip to the background page
 window.addEventListener('message', function(event) {
-    console.log('content Script', event.data.source, event.data);
+    const data : WindowMessage = event.data;
 
-    chrome.runtime.sendMessage({greeting: "hello"});
-
-    const port = chrome.runtime.connect({ name: 'content' });
-    port.postMessage(event);
-
-
-    // chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-    //     console.log('content Script', response);
-    // });
+    console.log('contentScript message', data);
+    chrome.runtime.sendMessage(event.data);
 });

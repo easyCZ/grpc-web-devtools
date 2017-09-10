@@ -1,39 +1,56 @@
 import Port = chrome.runtime.Port;
+import MessageSender = chrome.runtime.MessageSender;
+import {ActionType, InitMessage } from "./mpi";
 
-console.log('background');
+const connections: { [portName: string]: Port } = {};
 
-const ports: { [portName: string]: Port } = {};
 
 chrome.runtime.onConnect.addListener((port: Port) => {
-    console.log('Received connection from', port.name);
 
-    if (port.name !== 'devtools') return;
+    const extensionListener = (message: Object, port: Port) => {
+        console.log('Received onConnect', message);
 
-    ports[port.name] = port;
+        if ((message as any).action === ActionType.INIT) {
+            const initMessage = message as InitMessage;
+            console.log('Got connection init from', initMessage.source, 'Tab ID:', initMessage.tabId);
 
-    port.onDisconnect.addListener(() => {
-        delete ports[port.name];
+            connections[initMessage.tabId] = port;
+            return;
+        }
+    };
+
+    port.onMessage.addListener(extensionListener);
+    port.onDisconnect.addListener((port: Port) => {
+        port.onMessage.removeListener(extensionListener);
+
+        const tabs = Object.keys(connections);
+        for (let i = 0; i < tabs.length; i++) {
+            const tab = tabs[i];
+
+            if (connections[tab] === port) {
+                delete connections[tab];
+                break;
+            }
+        }
     });
 
-    port.onMessage.addListener((message: Object, port: Port) => {
-        console.log('received message from devtools page', message);
-        notifyDevtools(message);
-    })
-})
+});
 
-function notifyDevtools(msg) : void {
-    Object.keys(ports)
-        .forEach(key => {
-            ports[key].postMessage(msg);
-        })
-}
+// message relay
+chrome.runtime.onMessage.addListener((message: any, sender: MessageSender) => {
+    if (sender && sender.tab && sender.tab.id === null) return;
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        notifyDevtools(request);
-        console.log('background',request, sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
-        if (request.greeting == "hello")
-            sendResponse({farewell: "goodbye"});
-    });
+    console.log('Received message from tab ID:', sender.tab!.id, message);
+
+    if (sender.tab) {
+        const tabId = sender.tab.id;
+
+        if (tabId && tabId in connections) {
+            connections[tabId].postMessage(message);
+        } else {
+            console.warn('Tab not found in connection list.');
+        }
+    }
+
+    return true;
+});

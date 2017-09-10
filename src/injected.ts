@@ -2,49 +2,103 @@
  * Gets injected onto a website to expose a debugger on the window object
  */
 import {Message} from "google-protobuf";
-import {Debugger, MethodDefinition, RequestDebugger, Code, BrowserHeaders} from "grpc-web-client";
+import {Debugger, DebuggerProvider, Code, BrowserHeaders, grpc} from "grpc-web-client";
+import {ActionType, WindowMessage} from "./mpi";
 
 
-class GrpcWebExtensionRequestDebugger implements RequestDebugger {
+function sendToContentScript(windowMessage: WindowMessage) {
+    return window.postMessage(windowMessage, '*');
+}
 
-    onHeaders(headers: BrowserHeaders): void {
-        window.postMessage(headers, '*');
-        // throw new Error("Method not implemented.");
+class WebToolsDebugger implements Debugger {
+
+    private readonly id: number;
+    private method: grpc.MethodDefinition<Message, Message>;
+
+    constructor(id: number) {
+        this.id = id;
     }
 
-    onTrailers(metadata: BrowserHeaders): void {
-        window.postMessage(metadata, '*');
+    onRequestStart(host: string, method: grpc.MethodDefinition<Message, Message>): void {
+        this.method = method;
+
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.REQUEST_START,
+            payload: { host }
+        });
     }
 
-    onChunk(metadata: BrowserHeaders): void {
-        window.postMessage(metadata, '*');
-        // throw new Error("Method not implemented.");
+    onRequestHeaders(headers: BrowserHeaders): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.REQUEST_HEADERS,
+            payload: headers,
+        })
     }
 
-    onMessage(payload: Message): void {
-        window.postMessage(payload, '*');
-        // throw new Error("Method not implemented.");
+    onRequestMessage(payload: Message): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.REQUEST_MESSAGE,
+            payload: {
+                message: payload,
+                object: payload.toObject()
+            },
+        })
     }
 
+    onResponseHeaders(headers: BrowserHeaders, httpStatus: number): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.RESPONSE_HEADERS,
+            payload: { headers, httpStatus },
+        })
+    }
 
-    onEnd(grpcStatus: Code | null): void {
-        window.postMessage(grpcStatus, '*');
-        // throw new Error("Method not implemented.");
+    onResponseMessage(payload: Message): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.RESPONSE_MESSAGE,
+            payload: {
+                message: payload,
+                object: payload.toObject()
+            },
+        })
+    }
+
+    onResponseTrailers(metadata: BrowserHeaders): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.RESPONSE_TRAILERS,
+            payload: metadata,
+        })
+    }
+
+    onResponseEnd(grpcStatus: Code | null): void {
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.RESPONSE_END,
+            payload: { code: grpcStatus },
+        })
     }
 
     onError(code: Code, err: Error): void {
-        window.postMessage({ code, err }, '*');
-        // throw new Error("Method not implemented.");
+        sendToContentScript({
+            id: this.id,
+            action: ActionType.ERROR,
+            payload: { code, error: err }
+        })
     }
 
 }
 
-class GrpcWebExtensionDebugger implements Debugger {
+class WebToolsDebuggerProvider implements DebuggerProvider {
 
-    request(id: number, host: string, method: MethodDefinition, metadata: BrowserHeaders, message: Message): RequestDebugger {
-        return new GrpcWebExtensionRequestDebugger();
+    getInstanceForRequest(id: number): Debugger {
+        return new WebToolsDebugger(id);
     }
 
 }
 
-(window as any).__GRPC_WEB_DEVTOOLS__ = new GrpcWebExtensionDebugger();
+(window as any).__GRPC_WEB_DEVTOOLS__ = new WebToolsDebuggerProvider();

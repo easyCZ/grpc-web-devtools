@@ -2,35 +2,28 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import App from './app';
 
+import Port = chrome.runtime.Port;
+import {ActionType, InitMessage} from "./mpi";
+
+const connectionToBackground = chrome.runtime.connect({
+    name: 'panel',
+});
+
+sendBackgroundMessage({
+    action: ActionType.INIT,
+    source: 'panel',
+    tabId: chrome.devtools.inspectedWindow.tabId,
+});
 
 render(
     <App />,
     document.getElementById('root')
 );
 
-window.test = (x) => console.log(x);
+connectionToBackground.onMessage.addListener((message: Object, port: Port) => {
+    console.log('Received message in panel.', message);
+});
 
-// var port = chrome.extension.connect({
-//     name: "Sample Communication" //Given a Name
-// });
-
-// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-//     chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-//         console.log(response.farewell);
-//     });
-// });
-
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
-        if (request.greeting == "hello")
-            sendResponse({farewell: "goodbye"});
-    });
-
-const port = chrome.runtime.connect({ name: 'panel' });
-port.onMessage.addListener((msg, prt) => {
-    console.log('got message', msg, prt);
-    document.body.innerText = JSON.stringify(msg);
-})
+export function sendBackgroundMessage(message: InitMessage): void {
+    connectionToBackground.postMessage(message);
+}
