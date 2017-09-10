@@ -19,15 +19,17 @@ export type InitMessage = {
     action: ActionType.INIT,
 }
 
+export type WindowMessagePayload = RequestStartPayload
+    | BrowserHeaders
+    | MessagePayload
+    | ResponseHeadersPayload
+    | ResponeEndPayload
+    | ErrorPayload;
+
 export type WindowMessage = {
     action: ActionType,
     id: number,
-    payload: RequestStartPayload
-        | BrowserHeaders
-        | MessagePayload
-        | ResponseHeadersPayload
-        | ResponeEndPayload
-        | ErrorPayload,
+    payload: WindowMessagePayload,
 }
 
 export type RequestStartPayload = {

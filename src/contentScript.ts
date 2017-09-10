@@ -20,6 +20,6 @@ inject(PAGE_SCRIPT_URL);
 window.addEventListener('message', function(event) {
     const data : WindowMessage = event.data;
 
-    console.log('contentScript message', data);
-    chrome.runtime.sendMessage(event.data);
+    // console.log('contentScript message', data);
+    chrome.runtime.sendMessage(data);
 });

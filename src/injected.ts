@@ -101,4 +101,9 @@ class WebToolsDebuggerProvider implements DebuggerProvider {
 
 }
 
-(window as any).__GRPC_WEB_DEVTOOLS__ = new WebToolsDebuggerProvider();
+const win = window as any;
+win.__GRPC_WEB_DEVTOOLS__ = new WebToolsDebuggerProvider();
+
+if (win.grpc) {
+    win.grpc.registerDebugger(win.__GRPC_WEB_DEVTOOLS__);
+}
