@@ -3,16 +3,27 @@
  */
 import {Message} from "google-protobuf";
 import {Debugger, DebuggerProvider, Code, BrowserHeaders, grpc} from "grpc-web-client";
-import {ActionType, WindowMessage} from "./mpi";
+import {
+    grpcError,
+    requestHeaders,
+    requestMessage,
+    requestStart,
+    responseEnd,
+    responseHeaders,
+    responseMessage,
+    responseTrailers
+} from './app/actions/grpc';
+import {Action} from "redux";
 
 
-function sendToContentScript(windowMessage: WindowMessage) {
-    return window.postMessage(windowMessage, '*');
+function sendToContentScript(action: Action) {
+    return window.postMessage(action, '*');
 }
 
 class WebToolsDebugger implements Debugger {
 
     private readonly id: number;
+    private timestamp: number;
     private method: grpc.MethodDefinition<Message, Message>;
 
     constructor(id: number) {
@@ -21,74 +32,63 @@ class WebToolsDebugger implements Debugger {
 
     onRequestStart(host: string, method: grpc.MethodDefinition<Message, Message>): void {
         this.method = method;
+        this.timestamp = Date.now();
 
-        sendToContentScript({
-            id: this.id,
-            action: ActionType.REQUEST_START,
-            payload: { host }
-        });
+        sendToContentScript(requestStart.create({
+          id: this.id,
+          host,
+          timestamp: this.timestamp,
+        }));
     }
 
     onRequestHeaders(headers: BrowserHeaders): void {
-        sendToContentScript({
+        sendToContentScript(requestHeaders.create({
             id: this.id,
-            action: ActionType.REQUEST_HEADERS,
-            payload: headers,
-        })
+            headers,
+        }));
     }
 
     onRequestMessage(payload: Message): void {
-        sendToContentScript({
+        sendToContentScript(requestMessage.create({
             id: this.id,
-            action: ActionType.REQUEST_MESSAGE,
-            payload: {
-                message: payload,
-                object: payload.toObject()
-            },
-        })
+            message: payload.toObject(),
+        }));
     }
 
     onResponseHeaders(headers: BrowserHeaders, httpStatus: number): void {
-        sendToContentScript({
+        sendToContentScript(responseHeaders.create({
             id: this.id,
-            action: ActionType.RESPONSE_HEADERS,
-            payload: { headers, httpStatus },
-        })
+            headers, httpStatus,
+        }));
     }
 
     onResponseMessage(payload: Message): void {
-        sendToContentScript({
+        sendToContentScript(responseMessage.create({
             id: this.id,
-            action: ActionType.RESPONSE_MESSAGE,
-            payload: {
-                message: payload,
-                object: payload.toObject()
-            },
-        })
+            message: payload.toObject(),
+        }));
     }
 
     onResponseTrailers(metadata: BrowserHeaders): void {
-        sendToContentScript({
+        sendToContentScript(responseTrailers.create({
             id: this.id,
-            action: ActionType.RESPONSE_TRAILERS,
-            payload: metadata,
-        })
+            trailers: metadata,
+        }));
     }
 
     onResponseEnd(grpcStatus: Code | null): void {
-        sendToContentScript({
+        sendToContentScript(responseEnd.create({
             id: this.id,
-            action: ActionType.RESPONSE_END,
-            payload: { code: grpcStatus },
-        })
+            grpcStatus,
+        }));
     }
 
     onError(code: Code, err: Error): void {
-        sendToContentScript({
+        sendToContentScript(grpcError.create({
             id: this.id,
-            action: ActionType.ERROR,
-            payload: { code, error: err }
-        })
+            code,
+            error: err,
+        }));
     }
 
 }

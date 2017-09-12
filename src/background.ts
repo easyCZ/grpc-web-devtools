@@ -1,8 +1,12 @@
 import Port = chrome.runtime.Port;
 import MessageSender = chrome.runtime.MessageSender;
-import {ActionType, InitMessage } from "./mpi";
+import {ExtensionAction, extensionHide, extensionInit, extensionShow} from "./app/actions/extension";
+import {GrpcAction} from "./app/actions/grpc";
+
 
 const connections: { [portName: string]: Port } = {};
+
+type Action = GrpcAction | ExtensionAction;
 
 
 chrome.runtime.onConnect.addListener((port: Port) => {
@@ -10,13 +14,24 @@ chrome.runtime.onConnect.addListener((port: Port) => {
     const extensionListener = (message: Object, port: Port) => {
         console.log('Received onConnect', message);
 
-        if ((message as any).action === ActionType.INIT) {
-            const initMessage = message as InitMessage;
-            console.log('Got connection init from', initMessage.source, 'Tab ID:', initMessage.tabId);
+        const action = message as Action;
 
-            connections[initMessage.tabId] = port;
+        if (action.type === extensionInit.type) {
+            console.debug('Got connection init from', action.payload.source, 'Tab ID:', action.payload.tabId);
+
+            connections[action.payload.tabId] = port;
             return;
         }
+
+        // if (action.type === extensionShow.type) {
+        //     console.debug('Extension shown');
+        //     return;
+        // }
+        //
+        // if (action.type === extensionHide.type) {
+        //     console.debug('Extension hidden');
+        // }
+
     };
 
     port.onMessage.addListener(extensionListener);
@@ -40,15 +55,11 @@ chrome.runtime.onConnect.addListener((port: Port) => {
 chrome.runtime.onMessage.addListener((message: any, sender: MessageSender) => {
     if (sender && sender.tab && sender.tab.id === null) return;
 
-    console.log('Received message from tab ID:', sender.tab!.id, message);
-
     if (sender.tab) {
         const tabId = sender.tab.id;
 
         if (tabId && tabId in connections) {
             connections[tabId].postMessage(message);
-        } else {
-            console.warn('Tab not found in connection list.');
         }
     }
 
