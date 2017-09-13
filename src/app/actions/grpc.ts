@@ -7,6 +7,8 @@ export type Message = any;
 export type RequestStart = {
   id: RequestId,
   host: string,
+  service: string,
+  method: string,
   timestamp: number,
 }
 

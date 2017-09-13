@@ -24,19 +24,19 @@ class WebToolsDebugger implements Debugger {
 
     private readonly id: number;
     private timestamp: number;
-    private method: grpc.MethodDefinition<Message, Message>;
 
     constructor(id: number) {
         this.id = id;
     }
 
     onRequestStart(host: string, method: grpc.MethodDefinition<Message, Message>): void {
-        this.method = method;
         this.timestamp = Date.now();
 
         sendToContentScript(requestStart.create({
           id: this.id,
           host,
+          method: method.methodName,
+          service: method.service.serviceName,
           timestamp: this.timestamp,
         }));
     }
