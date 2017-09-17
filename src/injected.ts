@@ -20,7 +20,7 @@ function sendToContentScript(action: Action) {
     return window.postMessage(action, '*');
 }
 
-class WebToolsDebugger implements Debugger {
+export class WebToolsDebugger implements Debugger {
 
     private readonly id: number;
     private timestamp: number;
@@ -93,7 +93,7 @@ class WebToolsDebugger implements Debugger {
 
 }
 
-class WebToolsDebuggerProvider implements DebuggerProvider {
+export class WebToolsDebuggerProvider implements DebuggerProvider {
 
     getInstanceForRequest(id: number): Debugger {
         return new WebToolsDebugger(id);

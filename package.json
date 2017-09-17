@@ -5,6 +5,7 @@
   "repository": "git@github.com:easyCZ/grpc-web-devtools.git",
   "main": "src/index.js",
   "scripts": {
+    "test": "jest",
     "build": "webpack && npm run static",
     "watch": "webpack --watch",
     "start": "STANDALONE=true webpack-dev-server --content-base build/ --colors --hot"
@@ -26,15 +27,31 @@
     "redux": "^3.7.2"
   },
   "devDependencies": {
+    "@types/jest": "^20.0.8",
     "@types/node": "^8.0.28",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.7",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.1.0",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.4",
+    "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.8.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/scripts/preprocessTests.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx|js)"
+    ]
   }
 }
