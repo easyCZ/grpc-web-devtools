@@ -1,0 +1,15 @@
+.NoInvocations {
+    color: #777;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.foo {
+    color: chocolate;
+}
+.barBaz {
+    color: tomato;
+}

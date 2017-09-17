@@ -4,7 +4,9 @@ import Sidebar, {RequestOverview} from './Sidebar';
 import {connect} from "react-redux";
 import {GrpcCall, GrpcState} from "./reducers/grpc";
 import Details from "./Details";
-import NoRequests from "./NoRequests";
+import NoRequests from "./components/NoInvocations";
+
+import './index.css';
 
 type GrpcDevToolsProps = {
   grpc: GrpcState,
@@ -34,7 +36,7 @@ class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
 
     if (Object.keys(this.props.grpc).length === 0) {
       return (
-        <div style={styles.container}>
+        <div className="container">
           <NoRequests />
         </div>
       );
@@ -55,7 +57,7 @@ class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
 
 
     return (
-        <div style={styles.container}>
+        <div className="container">
           <Sidebar
             requests={requests}
             onSelect={(id) => this.onSelectCall(id)}
@@ -66,14 +68,6 @@ class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
 
         </div>
     );
-  }
-}
-
-const styles = {
-  container: {
-    'display': 'flex',
-    'flexDirection': 'column !important',
-    'position': 'relative',
   }
 }
 

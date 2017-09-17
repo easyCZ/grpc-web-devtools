@@ -19,14 +19,17 @@ module.exports = {
         extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
     module: {
-        loaders: [
-            // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+        rules: [
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
+            },
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader',
+                loader: ['ts-loader'],
                 exclude: [/node_modules/]
             }
-        ]
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
