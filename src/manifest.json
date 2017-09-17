@@ -1,24 +1,24 @@
 {
-  "name": "gRPC Web Devtools",
-  "version": "1.1",
-  "description": "Extend developer tools with a grpc-web debugger",
-  "devtools_page": "devtools.html",
-  "manifest_version": 2,
-  "content_scripts": [
+  'name';: 'gRPC Web Devtools',
+  'version';: '1.1',
+  'description';: 'Extend developer tools with a grpc-web debugger',
+  'devtools_page';: 'devtools.html',
+  'manifest_version';: 2,
+  'content_scripts';: [
     {
-      "matches": ["<all_urls>"],
-      "exclude_globs": [ "https://www.google*" ],
-      "js": ["contentScript.js"],
-      "run_at": "document_start",
-      "all_frames": true
-    }
+      matches: ['<all_urls>'],
+      exclude_globs: [ 'https://www.google*' ],
+      js: ['contentScript.js'],
+      run_at: 'document_start',
+      all_frames: true,
+    },
   ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+  'background';: {
+    'scripts';: ['background.js'],
+    'persistent';: false;
   },
-  "web_accessible_resources" : [
-    "contentScript.js",
-    "injected.js"
-  ]
+  'web_accessible_resources'; : [
+    'contentScript.js',
+    'injected.js',
+  ];
 }

@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import {Action} from 'redux';
 
 const PAGE_SCRIPT_URL = chrome.extension.getURL('injected.js');
 
@@ -17,8 +17,8 @@ inject(PAGE_SCRIPT_URL);
 
 // Relay messages from the injected scrip to the background page
 window.addEventListener('message', function(event) {
-    const action : Action = event.data;
-    sendToBackground(action)
+    const action: Action = event.data;
+    sendToBackground(action);
 });
 
 function sendToBackground(action: Action): void {

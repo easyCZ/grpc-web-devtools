@@ -1,8 +1,8 @@
 /*
  * Gets injected onto a website to expose a debugger on the window object
  */
-import {Message} from "google-protobuf";
-import {Debugger, DebuggerProvider, Code, BrowserHeaders, grpc} from "grpc-web-client";
+import {Message} from 'google-protobuf';
+import {Debugger, DebuggerProvider, Code, BrowserHeaders, grpc} from 'grpc-web-client';
 import {
     grpcError,
     requestHeaders,
@@ -11,10 +11,9 @@ import {
     responseEnd,
     responseHeaders,
     responseMessage,
-    responseTrailers
+    responseTrailers,
 } from './app/actions/grpc';
-import {Action} from "redux";
-
+import {Action} from 'redux';
 
 function sendToContentScript(action: Action) {
     return window.postMessage(action, '*');

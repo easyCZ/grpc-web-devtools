@@ -10,44 +10,44 @@ export type RequestStart = {
   service: string,
   method: string,
   timestamp: number,
-}
+};
 
 export type RequestHeaders = {
   id: RequestId,
   headers: BrowserHeaders,
-}
+};
 
 export type RequestMessage = {
   id: RequestId,
   message: Message,
-}
+};
 
 export type ResponseHeaders = {
   id: RequestId,
   headers: BrowserHeaders,
   httpStatus: number,
-}
+};
 
 export type ResponseMessage = {
   id: RequestId,
   message: Message,
-}
+};
 
 export type ResponseTrailers = {
   id: RequestId,
   trailers: BrowserHeaders,
-}
+};
 
 export type ResponseEnd = {
   id: RequestId,
   grpcStatus: Code | null,
-}
+};
 
 export type GrpcError = {
   id: RequestId,
   code: Code,
   error: Error,
-}
+};
 
 export const requestStart = new ActionCreator<'REQUEST_START', RequestStart>('REQUEST_START');
 export const requestHeaders = new ActionCreator<'REQUEST_HEADERS', RequestHeaders>('REQUEST_HEADERS');
@@ -68,6 +68,5 @@ export const GrpcActionCreators = {
     responseEnd,
     grpcError,
 };
-
 
 export type GrpcAction = typeof GrpcActionCreators[keyof typeof GrpcActionCreators];

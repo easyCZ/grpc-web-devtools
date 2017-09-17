@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux'
-import {Action, createStore} from 'redux'
+import { Provider } from 'react-redux';
+import {Action, createStore} from 'redux';
 import reducers, {RootState} from './app/reducers';
 import App from './app';
 
 import Port = chrome.runtime.Port;
-import {extensionInit} from "./app/actions/extension";
-import {GrpcAction} from "./app/actions/grpc";
-
+import {extensionInit} from './app/actions/extension';
+import {GrpcAction} from './app/actions/grpc';
 
 const store = createStore<RootState>(reducers);
 
@@ -16,7 +15,7 @@ render(
     <Provider store={store}>
         <App />
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );
 
 let connectionToBackground: Port;
@@ -42,6 +41,3 @@ if (process.env.STANDALONE) {
 export function dispatchToBackground(action: Action): void {
   connectionToBackground.postMessage(action);
 }
-
-
-

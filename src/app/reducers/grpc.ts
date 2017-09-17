@@ -1,10 +1,11 @@
 import {
   GrpcAction, GrpcError, grpcError, requestHeaders, requestMessage, requestStart, responseEnd, responseHeaders,
-  responseMessage, responseTrailers
-} from "../actions/grpc";
-import {BrowserHeaders, Code} from "grpc-web-client";
+  responseMessage, responseTrailers,
+} from '../actions/grpc';
+import {BrowserHeaders, Code} from 'grpc-web-client';
 
 export type GrpcCall = {
+  id: number,
   host: string | null,
   service: string | null,
   method: string | null,
@@ -16,15 +17,19 @@ export type GrpcCall = {
   responseTrailers: BrowserHeaders | null,
   grpcStatus: Code | null,
   errors: GrpcError[],
-}
+};
 
 export type GrpcState = { [id: number]: GrpcCall };
 
 const initialState = {};
 
 function getOrCreate(state: GrpcState, key: number): GrpcCall {
-  if (key in state) return state[key];
+  if (key in state) {
+    return state[key];
+  }
+
   return {
+    id: key,
     grpcStatus: null,
     responseTrailers: null,
     responseHeaders: null,
@@ -51,7 +56,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
         timestamp: action.payload.timestamp,
         service: action.payload.service,
         method: action.payload.method,
-      }
+      },
     };
   }
 
@@ -62,7 +67,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
       [action.payload.id]: {
         ...call,
         requestHeaders: action.payload.headers,
-      }
+      },
     };
   }
 
@@ -76,7 +81,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
           ...call.requestMessages,
           action.payload.message,
         ],
-      }
+      },
     };
   }
 
@@ -87,7 +92,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
       [action.payload.id]: {
         ...call,
         responseHeaders: action.payload.headers,
-      }
+      },
     };
   }
 
@@ -101,7 +106,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
           ...call.requestMessages,
           action.payload.message,
         ],
-      }
+      },
     };
   }
 
@@ -112,7 +117,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
       [action.payload.id]: {
         ...call,
         responseTrailers: action.payload.trailers,
-      }
+      },
     };
   }
 
@@ -123,7 +128,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
       [action.payload.id]: {
         ...call,
         grpcStatus: action.payload.grpcStatus,
-      }
+      },
     };
   }
 
@@ -137,7 +142,7 @@ export default function grpcReducer(state: GrpcState = initialState, action: Grp
           ...call.errors,
           action.payload.error,
         ],
-      }
+      },
     };
   }
 

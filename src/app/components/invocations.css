@@ -1,15 +1,15 @@
-.NoInvocations {
-    color: #777;
-    background-color: white;
+.NoInvocations; {
+    color: ; #777;
+    background - color; : white;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    justify - content; : center;
+    align - items; : center;
+    text - align; : center;
 }
 
-.foo {
+.foo; {
     color: chocolate;
 }
-.barBaz {
+.barBaz; {
     color: tomato;
 }

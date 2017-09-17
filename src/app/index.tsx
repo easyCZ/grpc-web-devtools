@@ -1,28 +1,28 @@
 import {Component, Props, ReactElement} from 'react';
 import * as React from 'react';
 import Sidebar, {RequestOverview} from './Sidebar';
-import {connect} from "react-redux";
-import {GrpcCall, GrpcState} from "./reducers/grpc";
-import Details from "./Details";
-import NoRequests from "./components/NoInvocations";
+import {connect} from 'react-redux';
+import {GrpcCall, GrpcState} from './reducers/grpc';
+import Details from './Details';
+import NoRequests from './components/NoInvocations';
 
 import './index.css';
 
 type GrpcDevToolsProps = {
   grpc: GrpcState,
-}
+};
 
 type GrpcDevToolsState = {
   selected: GrpcCall | null,
-}
+};
 
 class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
 
   constructor(props: GrpcDevToolsProps) {
     super(props);
     this.state = {
-      selected: null
-    }
+      selected: null,
+    };
   }
 
   onSelectCall(id: number) {
@@ -42,27 +42,17 @@ class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
       );
     }
 
-    const requests: RequestOverview[] = [];
-    for (let id in this.props.grpc) {
-      const request = this.props.grpc[id];
-      if (request.host && request.service && request.method) {
-        requests.push({
-          id: +id,
-          host: request.host,
-          method: request.method,
-          service: request.service,
-        })
-      }
-    }
-
+    const requests = Object.keys(this.props.grpc)
+        .map(id => this.props.grpc[+id]);
 
     return (
         <div className="container">
           <Sidebar
             requests={requests}
-            onSelect={(id) => this.onSelectCall(id)}
+            onSelect={id => this.onSelectCall(id)}
           />
-          {this.state.selected &&
+
+          { this.state.selected &&
             <Details grpcCall={this.state.selected} />
           }
 
@@ -73,6 +63,6 @@ class GrpcDevTools extends Component<GrpcDevToolsProps, GrpcDevToolsState> {
 
 export default connect(state => {
   return {
-    grpc: state.grpc
-  }
-})(GrpcDevTools)
+    grpc: state.grpc,
+  };
+})(GrpcDevTools);

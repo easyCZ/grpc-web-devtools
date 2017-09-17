@@ -1,10 +1,9 @@
 import ExtensionPanel = chrome.devtools.panels.ExtensionPanel;
 
-
 chrome.devtools.panels.create(
-    "gRPC",
+    'gRPC',
     './icon.png',
-    "./panel.html",
+    './panel.html',
     (panel: ExtensionPanel) => {
 
         // panel.onShown.addListener((window: chrome.windows.Window) => {
@@ -20,5 +19,5 @@ chrome.devtools.panels.create(
             source: 'devtools',
             tabId: chrome.devtools.inspectedWindow.tabId,
         });
-    }
+    },
 );

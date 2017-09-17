@@ -1,1 +1,1 @@
-export type RootAction = {} // TODO
+export type RootAction = {}; // TODO

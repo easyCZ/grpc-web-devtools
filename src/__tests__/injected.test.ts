@@ -33,5 +33,4 @@ describe('WebToolsDebuggerProvider', () => {
     expect(provider.getInstanceForRequest(REQUEST_ID)).toBeInstanceOf(WebToolsDebugger);
   });
 
-
-})
+});

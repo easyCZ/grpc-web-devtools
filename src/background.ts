@@ -1,13 +1,11 @@
 import Port = chrome.runtime.Port;
 import MessageSender = chrome.runtime.MessageSender;
-import {ExtensionAction, extensionHide, extensionInit, extensionShow} from "./app/actions/extension";
-import {GrpcAction} from "./app/actions/grpc";
-
+import {ExtensionAction, extensionInit } from './app/actions/extension';
+import {GrpcAction} from './app/actions/grpc';
 
 const connections: { [portName: string]: Port } = {};
 
 type Action = GrpcAction | ExtensionAction;
-
 
 chrome.runtime.onConnect.addListener((port: Port) => {
 

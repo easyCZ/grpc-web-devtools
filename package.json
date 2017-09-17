@@ -5,6 +5,7 @@
   "repository": "git@github.com:easyCZ/grpc-web-devtools.git",
   "main": "src/index.js",
   "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "test": "jest",
     "build": "webpack && npm run static",
     "watch": "webpack --watch",
@@ -37,6 +38,8 @@
     "ts-loader": "^2.3.4",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
+    "tslint-loader": "^3.5.3",
+    "tslint-react": "^3.2.0",
     "typescript": "^2.5.2",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.8.2"

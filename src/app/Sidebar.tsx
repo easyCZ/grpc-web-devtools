@@ -1,16 +1,17 @@
-import * as React from "react";
+import * as React from 'react';
+import {GrpcCall, GrpcState} from './reducers/grpc';
 
 export type RequestOverview = {
   id: number,
   host: string,
   method: string,
   service: string,
-}
+};
 
 type SidebarProps = {
-  requests: RequestOverview[],
-  onSelect: (id: number) => any
-}
+  requests: GrpcCall[],
+  onSelect: (id: number) => any,
+};
 
 const Sidebar: React.SFC<SidebarProps> = (props) => {
   return (
@@ -18,7 +19,7 @@ const Sidebar: React.SFC<SidebarProps> = (props) => {
       {props.requests.map(request =>
         <li onClick={() => console.log('click') || props.onSelect(request.id)}>
           {request.host}/{request.service}.{request.method}
-        </li>
+        </li>,
       )}
 
     </ul>
