@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/easyCZ/grpc-web-devtools.svg?style=svg)](https://circleci.com/gh/easyCZ/grpc-web-devtools)
+
 # gRPC Web Devtools
 This an extension to support debugging of [grpc-web](https://github.com/improbable-eng/grpc-web) from the browser. It is using an exposed debugger interface which is currently in [development](https://github.com/easyCZ/grpc-web/tree/debugger).
 
