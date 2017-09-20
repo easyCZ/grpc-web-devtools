@@ -10,7 +10,7 @@
   ],
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "jsx": "react",
     "outDir": "./build/",

@@ -8,13 +8,14 @@ import App from './app';
 import Port = chrome.runtime.Port;
 import {extensionInit} from "./app/actions/extension";
 import {GrpcAction} from "./app/actions/grpc";
+import DevPanel from './app/DevPanel';
 
 
 const store = createStore<RootState>(reducers);
 
 render(
     <Provider store={store}>
-        <App />
+      <App />
     </Provider>,
     document.getElementById('root')
 );
@@ -22,7 +23,13 @@ render(
 let connectionToBackground: Port;
 
 // For development without extension
-if (process.env.STANDALONE) {
+if (!process.env.STANDALONE) {
+
+
+  render(<Provider store={store}>
+    <DevPanel />
+  </Provider>, document.getElementById('devpanel'));
+
   connectionToBackground = chrome.runtime.connect({
     name: 'panel',
   });

@@ -1,0 +1,18 @@
+#devpanel {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.devpanel {
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.devpanel button + button {
+    margin: 0 0.2em;
+}
+
+.devpanel .devpanel-callbacks {
+    margin: 0.5em 0;
+}
