@@ -1,8 +1,8 @@
 import * as React from "react";
-import {GrpcCall} from "./reducers/grpc";
+import {GrpcInvocation} from "./reducers/grpc";
 
 type DetailsProps = {
-  grpcCall: GrpcCall
+  grpcCall: GrpcInvocation
 }
 
 const Details: React.SFC<DetailsProps> = (props) => {

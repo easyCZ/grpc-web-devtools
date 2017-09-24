@@ -4,38 +4,32 @@ import {
 } from "../actions/grpc";
 import {BrowserHeaders, Code} from "grpc-web-client";
 
-export type GrpcCall = {
-  host: string | null,
-  service: string | null,
-  method: string | null,
-  timestamp: number | null,
-  requestHeaders: BrowserHeaders | null,
+export type GrpcInvocation = {
+  id: number,
+  host?: string,
+  service?: string,
+  method?: string,
+  timestamp?: number,
+  requestHeaders?: BrowserHeaders,
   requestMessages: any[],
-  responseHeaders: BrowserHeaders | null,
+  responseHeaders?: BrowserHeaders,
   responseMessages: any[],
-  responseTrailers: BrowserHeaders | null,
-  grpcStatus: Code | null,
+  responseTrailers?: BrowserHeaders,
+  grpcStatus?: Code | null,
   errors: GrpcError[],
 }
 
-export type GrpcState = { [id: number]: GrpcCall };
+export type GrpcState = { [id: number]: GrpcInvocation };
 
 const initialState = {};
 
-function getOrCreate(state: GrpcState, key: number): GrpcCall {
+function getOrCreate(state: GrpcState, key: number): GrpcInvocation {
   if (key in state) return state[key];
   return {
-    grpcStatus: null,
-    responseTrailers: null,
-    responseHeaders: null,
-    timestamp: null,
-    host: null,
-    service: null,
-    method: null,
-    responseMessages: [],
+    id: key,
     requestMessages: [],
+    responseMessages: [],
     errors: [],
-    requestHeaders: null,
   };
 }
 

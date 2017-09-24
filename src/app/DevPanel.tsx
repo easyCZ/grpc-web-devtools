@@ -70,7 +70,7 @@ export class DevPanel extends React.Component<DevPanelProps, {}> {
 
   onRequestStart() {
     this.props.dispatch(requestStart.create({
-      service: 'RandomTestService',
+      service: 'com.example.test',
       host: 'http://test.hostname.com',
       id: id++,
       timestamp: Date.now(),

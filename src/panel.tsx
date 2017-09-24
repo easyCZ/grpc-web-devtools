@@ -10,6 +10,8 @@ import {extensionInit} from "./app/actions/extension";
 import {GrpcAction} from "./app/actions/grpc";
 import DevPanel from './app/DevPanel';
 
+import 'react-table/react-table.css'
+
 
 const store = createStore<RootState>(reducers);
 
