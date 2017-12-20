@@ -8,9 +8,9 @@ The vision is to be able to debug gRPC web as easily as it is to use the Network
 **Very very much work in progress.**
 
 ## Dev
-1. `npm i && npm run compile` or `npm run watch`
-2. Checkout https://github.com/easyCZ/grpc-web/tree/debugger and switch to the `debugger` branch
-3. In `grpc-web` run `cd ts && npm run lib:build && npm link` to create a symlink to the grpc web with the new debugger interface
+1. Checkout https://github.com/easyCZ/grpc-web/tree/debugger and switch to the `debugger` branch
+2. In `grpc-web` run `cd ts && npm install && npm run lib:build && npm link` to create a symlink to the grpc web with the new debugger interface
+3. `npm i && npm run build` or `npm run watch`
 4. In `grpc-web-devtools` do `npm run link grpc-web-client`
 5. Load unpacked chrome extension from `grpc-web-devtools/build`
 6. Run the example in `grpc-web/example` with `npm run start`
